@@ -5,7 +5,7 @@ class Servicio with ChangeNotifier {
   final String nombre;
   final String descripcion;
   final String hora;
-  final double precio;
+  final String precio;
   final num estado;
   final String imageUrl;
   bool isFavorite;

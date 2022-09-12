@@ -15,6 +15,8 @@ class ServiciosGrid extends StatelessWidget {
     final serviciosData = Provider.of<Servicios>(context);
     final servicios =
         showFavs ? serviciosData.favoriteItems : serviciosData.items;
+    print('elcontenido');
+    print(servicios);
     return GridView.builder(
       padding: const EdgeInsets.all(10.0),
       itemCount: servicios.length,

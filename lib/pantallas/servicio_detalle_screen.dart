@@ -1,3 +1,4 @@
+import 'package:appcarofinal/pantallas/reserva_screen.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -22,6 +23,50 @@ class ServicioDetalleScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(loadedServicio.nombre),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 300,
+              width: double.infinity,
+              child: Image(
+                image: AssetImage(loadedServicio.imageUrl),
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              '\$ ${loadedServicio.precio}',
+              style: TextStyle(
+                color: Colors.blueGrey,
+                fontSize: 25,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  loadedServicio.descripcion,
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                )),
+            SizedBox(
+              height: 15,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, ReservaScreen.routeName);
+              },
+              child: Text("Reservar"),
+            )
+          ],
+        ),
       ),
     );
   }
