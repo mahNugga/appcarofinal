@@ -14,7 +14,7 @@ class ServiciosGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final serviciosData = Provider.of<Servicios>(context);
     final servicios =
-        showFavs ? serviciosData.favoriteItems : serviciosData.items;
+        showFavs ? serviciosData.favoriteItems : serviciosData.dbitems;
     print('elcontenido');
     print(servicios);
     return GridView.builder(

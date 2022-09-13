@@ -5,6 +5,7 @@ import '../providers/servicios.dart';
 import '../widgets/servicios_grid.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 enum filtroOp {
   Favoritos,
@@ -18,6 +19,23 @@ class ServiciosOverScreen extends StatefulWidget {
 
 class _ServiciosOverScreenState extends State<ServiciosOverScreen> {
   var _showOnlyFavoritos = false;
+  var _isInit = true;
+  var _isloading = false;
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isloading = true;
+      });
+      Provider.of<Servicios>(context).traeServicios().then((_) {
+        setState(() {
+          _isloading = false;
+        });
+      });
+    }
+    _isInit = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +66,11 @@ class _ServiciosOverScreenState extends State<ServiciosOverScreen> {
           )
         ],
       ),
-      body: ServiciosGrid(_showOnlyFavoritos),
+      body: _isloading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ServiciosGrid(_showOnlyFavoritos),
     );
   }
 }

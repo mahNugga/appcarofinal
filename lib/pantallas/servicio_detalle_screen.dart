@@ -14,12 +14,15 @@ class ServicioDetalleScreen extends StatelessWidget {
   static const routeName = '/servicio-detalle';
   @override
   Widget build(BuildContext context) {
+    print('que paso');
     final servicioid = ModalRoute.of(context)!.settings.arguments as String;
     //... all
     final loadedServicio = Provider.of<Servicios>(
       context,
       listen: false,
     ).findById(servicioid);
+    print('secuencia');
+    print(servicioid);
     return Scaffold(
       appBar: AppBar(
         title: Text(loadedServicio.nombre),

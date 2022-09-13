@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class Servicio with ChangeNotifier {
-  String id;
+  final String id;
   final String nombre;
   final String descripcion;
   final String hora;

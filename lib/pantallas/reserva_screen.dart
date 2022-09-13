@@ -35,7 +35,9 @@ class _ReservaScreenState extends State<ReservaScreen> {
   }
 
   void _presentDatePicker() {
-    thor = false;
+    /* setState(() {
+      thor = false;
+    }); */
     showDatePicker(
             context: context,
             initialDate: DateTime.now(),
@@ -52,8 +54,11 @@ class _ReservaScreenState extends State<ReservaScreen> {
   }
 
   void buscahorario() {
-    thor = true;
-    Provider.of<Reservas>(context, listen: false).matchfechas(fechaneo);
+    setState(() {
+      thor = true;
+    });
+    empleadosDisp = Provider.of<Reservas>(context, listen: false)
+        .matchfechas(fechaneo) as List;
   }
 
   void presentaEmp() {}
@@ -85,7 +90,7 @@ class _ReservaScreenState extends State<ReservaScreen> {
                   icon: Icon(Icons.calendar_today_rounded),
                 ),
                 Container(
-                  child: FlatButton(
+                  child: TextButton(
                     child: Text('Revisar Disponibilidad'),
                     onPressed: buscahorario,
                   ),
@@ -94,20 +99,32 @@ class _ReservaScreenState extends State<ReservaScreen> {
             ),
           ),
           Column(children: <Widget>[
-            Text(thor ? 'Empleados Disponibles' : "No hay Empleados"),
-            /* ListView.builder(
-                itemCount: empleadosDisp.length,
-                itemBuilder: (context, index) => Card(
-                  elevation: 5,
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.green,
-                      child: Text('$index'),
-                    ),
-                    title: Text(empleadosDisp[index]['']),
+            Text('Empleados Disponibles'), //: Text("No hay Empleados"),
+            Card(
+              elevation: 5,
+              color: Colors.amber,
+              child: Text('dibuja carajo'),
+            ),
+            /*  Expanded(
+              child: SizedBox(
+                height: 300,
+                width: double.infinity,
+                /* child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: empleadosDisp.length,
+                  itemBuilder: (context, index) => Card(
+                    elevation: 5,
+                    /* child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.green,
+                        child: Text('$index'),
+                      ),
+                      //title: Text(empleadosDisp[index]['']),
+                    ), */
                   ),
-                ),
-              ), */
+                ), */
+              ),
+            ), */
           ]),
         ],
       ),

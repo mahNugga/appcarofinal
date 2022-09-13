@@ -18,21 +18,21 @@ class ServicioItem extends StatelessWidget {
   Widget build(BuildContext context) {
     //final serv = Provider.of<Servicio>(context);
     return Consumer<Servicio>(
-      builder: (ctx, serv, child) => ClipRRect(
+      builder: (ctx, s, child) => ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: GridTile(
           footer: GridTileBar(
             leading: IconButton(
               onPressed: () {
-                serv.toggleFavorite();
+                s.toggleFavorite();
               },
               icon: Icon(
-                serv.isFavorite ? Icons.favorite : Icons.favorite_border,
+                s.isFavorite ? Icons.favorite : Icons.favorite_border,
               ),
             ),
             backgroundColor: Colors.black87,
             title: Text(
-              serv.nombre,
+              s.nombre,
               textAlign: TextAlign.center,
             ),
             trailing: IconButton(
@@ -45,11 +45,11 @@ class ServicioItem extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pushNamed(
                 ServicioDetalleScreen.routeName,
-                arguments: serv.id,
+                arguments: s.id,
               );
             },
             child: Image(
-              image: AssetImage(serv.imageUrl),
+              image: AssetImage(s.imageUrl),
               fit: BoxFit.cover,
             ),
           ),

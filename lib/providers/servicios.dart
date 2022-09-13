@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 import './servicio.dart';
 
 class Servicios with ChangeNotifier {
-  List<Servicio> _items = [
-    Servicio(
+  /* List<Servicio> _items = [
+   Servicio(
       id: '1',
       nombre: 'Corte Rusosky',
       descripcion: 'For the MotherLand!',
@@ -38,13 +38,13 @@ class Servicios with ChangeNotifier {
       hora: '45',
       precio: '40',
       imageUrl: 'images/logoCorteCabello2.png',
-    ),
-  ];
+    ), 
+  ]; */
 
   /* var showFavoritos = false; */
 
   List<Servicio> _dbitems = [];
-  Future<void> listaServicios() async {
+  Future<List> listaServicios() async {
     var url = Uri.http('localhost:3700', '/api/consulta-servicio');
     try {
       var response = await http.get(url);
@@ -73,15 +73,46 @@ class Servicios with ChangeNotifier {
     } catch (er) {
       print('el mistake');
       print(er);
+    } finally {
+      return _dbitems;
     }
   }
 
   List<Servicio> get dbitems {
-    listaServicios();
+    /* var url = Uri.http('localhost:3700', '/api/consulta-servicio');
+    try {
+      var response = await http.get(url);
+      print(json.decode(response.body));
+      var data = json.decode(response.body) as Map<String, dynamic>;
+      data.forEach((key, value) {
+        if (key == 'listaServicio') {
+          print('buenaaaaa');
+          List vec = value;
+          vec.forEach((et) {
+            _dbitems.add(Servicio(
+              id: et['id'].toString(),
+              nombre: et['nombre'].toString(),
+              descripcion: et['descripcion'].toString(),
+              hora: et['hora'].toString(),
+              precio: et['precio'].toString(),
+              imageUrl: 'images/logoCorteCabello2.png',
+            ));
+          });
+        }
+      });
+      _dbitems.forEach((element) {
+        print(element.id);
+        print(element.imageUrl);
+      });
+    } catch (er) {
+      print('el mistake');
+      print(er);
+    } */
+
     return [..._dbitems];
   }
 
-  List<Servicio> get items {
+  /* List<Servicio> get items {
     /* var url = Uri.parse('http://localhost:3700/api/consulta-servicio');
     http.get(url, headers: {'Content-Type': 'application/json'}).then((value) {
       print(value.body);
@@ -92,7 +123,7 @@ class Servicios with ChangeNotifier {
       return _items.where((element) => element.isFavorite).toList();
     } */
     return [..._items];
-  }
+  } */
 
   /* Future<List<Servicio>> get dbitems async {
     var url = Uri.parse('http://localhost:3700/api/consulta-servicio');
@@ -112,12 +143,51 @@ class Servicios with ChangeNotifier {
     showFavoritos = false;
     notifyListeners();
   } */
+
+  Future<void> traeServicios() async {
+    var url = Uri.http('localhost:3700', '/api/consulta-servicio');
+    try {
+      var response = await http.get(url);
+      print(response);
+      var data = json.decode(response.body) as Map<String, dynamic>;
+      List<Servicio> jinx = [];
+      data.forEach((key, value) {
+        print('iniciando desde provider metod calling extranio');
+        if (key == 'listaServicio') {
+          List vec = value;
+          vec.forEach((mt) {
+            print('otro intento de loading!');
+
+            jinx.add(Servicio(
+              id: mt['id'].toString(),
+              nombre: mt['nombre'].toString(),
+              descripcion: mt['descripcion'].toString(),
+              hora: mt['hora'].toString(),
+              precio: mt['precio'].toString(),
+              imageUrl: 'images/logoCorteCabello2.png',
+            ));
+          });
+        }
+      });
+      _dbitems = jinx;
+      print('los resultados son');
+      _dbitems.forEach((element) {
+        print(element.id);
+        print(element.nombre);
+      });
+      notifyListeners();
+    } catch (err) {
+      print(err);
+      throw err;
+    }
+  }
+
   List<Servicio> get favoriteItems {
-    return _items.where((servitem) => servitem.isFavorite).toList();
+    return _dbitems.where((servitem) => servitem.isFavorite).toList();
   }
 
   Servicio findById(String id) {
-    return _items.firstWhere((serv) => serv.id == id);
+    return _dbitems.firstWhere((serv) => serv.id == id);
   }
 
   void addServicio() {
