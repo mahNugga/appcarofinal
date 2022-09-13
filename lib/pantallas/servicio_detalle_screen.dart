@@ -1,10 +1,10 @@
-import 'package:appcarofinal/pantallas/reserva_screen.dart';
+import '../pantallas/reserva_screen.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '../providers/servicio.dart';
 import '../providers/servicios.dart';
 
 class ServicioDetalleScreen extends StatelessWidget {
@@ -64,7 +64,14 @@ class ServicioDetalleScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, ReservaScreen.routeName);
+                Navigator.pushNamed(context, ReservaScreen.routeName,
+                    arguments: Servicio(
+                        id: servicioid,
+                        nombre: loadedServicio.nombre,
+                        descripcion: loadedServicio.descripcion,
+                        hora: loadedServicio.hora,
+                        precio: loadedServicio.precio,
+                        imageUrl: 'images/logoCorteCabello2.png'));
               },
               child: Text("Reservar"),
             )

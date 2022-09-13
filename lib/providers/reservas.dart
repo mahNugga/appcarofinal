@@ -38,7 +38,7 @@ class Empleado {
   });
 }
 
-class EmpleadoReserva {
+class EmpleadoReserva with ChangeNotifier {
   String id;
   String nombre;
   String apellido;
@@ -54,7 +54,7 @@ class EmpleadoReserva {
 }
 
 class Reservas with ChangeNotifier {
-  List empleadosDisp = [];
+  List<EmpleadoReserva> empleadosDisp = [];
   Future<void> addEmpleado() async {
     var url = Uri.parse('http://localhost:3700/api/lista-empleado-gen');
     try {
@@ -106,7 +106,7 @@ class Reservas with ChangeNotifier {
     }
   }
 
-  Future<List> matchfechas(DateTime fecha) async {
+  Future<void> matchfechas(DateTime fecha) async {
     var f = fecha.toString().substring(0, 10);
     print(fecha.toString().substring(0, 10));
     var url =
@@ -119,28 +119,32 @@ class Reservas with ChangeNotifier {
       print('la respuesta completa');
       print(json.decode(response.body));
       var data = json.decode(response.body) as Map<String, dynamic>;
+      List<EmpleadoReserva> jinx = [];
       data.forEach((key, value) {
         if (key == 'fechin') {
           print('vamos bien');
           List vec = value;
           vec.forEach((et) {
-            print(et);
-            empleadosDisp.add(EmpleadoReserva(
-                id: et['empleado_id'].toString(),
-                nombre: et['empnombre'].toString(),
-                apellido: et['apellido'].toString(),
-                horaini: et['hora_inicio'].toString(),
-                horafin: et['hora_fin'].toString()));
+            //print(et);
+            jinx.add(EmpleadoReserva(
+              id: et['empleado_id'].toString(),
+              nombre: et['empnombre'].toString(),
+              apellido: et['apellido'].toString(),
+              horaini: et['hora_inicio'].toString(),
+              horafin: et['hora_fin'].toString(),
+            ));
           });
         }
       });
+      empleadosDisp = jinx;
       print('salimos');
       empleadosDisp.forEach((element) {
         print('emtramossss');
         print(element.id);
         print(element.nombre);
       });
-      return empleadosDisp;
+      notifyListeners();
+      //return empleadosDisp;
     } catch (er) {
       print(er);
       throw er;

@@ -182,6 +182,33 @@ class Servicios with ChangeNotifier {
     }
   }
 
+  Future<void> Reservar(empleadoid, servicioid, sernom, hora) async {
+    var horadb = hora.toString();
+    var url = Uri.http('localhost:3700', '/api/reservar');
+    try {
+      var res = http.post(url,
+          body: json.encode({
+            'cabecera': '',
+            'notas': 'android.API-30',
+            'mensaje': '',
+            'fechaseleccion': DateTime.now().toString(),
+            'hora': horadb,
+            'descuento': 0.00,
+            'subtotal': 0.00,
+            'iva': 12,
+            'total': 0,
+            'fecha_creado': DateTime.now().toString(),
+            'servicio_id': servicioid,
+            'empleado_id': empleadoid,
+            'cliente_id': 1,
+            'estado_id': 1,
+          }));
+    } catch (err) {
+      print('el error del post:');
+      print(err);
+    }
+  }
+
   List<Servicio> get favoriteItems {
     return _dbitems.where((servitem) => servitem.isFavorite).toList();
   }

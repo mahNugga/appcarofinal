@@ -1,3 +1,5 @@
+import '../providers/servicio.dart';
+import '../widgets/empleado_single.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -62,11 +64,15 @@ class _ReservaScreenState extends State<ReservaScreen> {
   }
 
   void presentaEmp() {}
+  void reservar() {}
   Widget build(BuildContext context) {
+    final empleadosData = Provider.of<Reservas>(context);
+    final servinfo = ModalRoute.of(context)!.settings.arguments as Servicio;
+    var empleados = empleadosData.empleadosDisp;
     return Scaffold(
       appBar: AppBar(
           title: Text(
-        'Reserva de Servicio',
+        'Reserva de Servicio :${servinfo.nombre}',
         style: TextStyle(fontSize: 30),
       )),
       body: Column(
@@ -98,34 +104,56 @@ class _ReservaScreenState extends State<ReservaScreen> {
               ],
             ),
           ),
-          Column(children: <Widget>[
-            Text('Empleados Disponibles'), //: Text("No hay Empleados"),
-            Card(
-              elevation: 5,
-              color: Colors.amber,
-              child: Text('dibuja carajo'),
-            ),
-            /*  Expanded(
-              child: SizedBox(
-                height: 300,
-                width: double.infinity,
-                /* child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: empleadosDisp.length,
-                  itemBuilder: (context, index) => Card(
-                    elevation: 5,
-                    /* child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.green,
-                        child: Text('$index'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                      'Empleados Disponibles'), //: Text("No datos Seleccionados!"),
+                  Container(
+                    height: 300,
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(
+                          height: 10,
+                        );
+                      },
+                      padding: EdgeInsets.all(10),
+                      itemCount: empleados.length,
+                      itemBuilder: (context, index) =>
+                          ChangeNotifierProvider.value(
+                        value: empleados[index],
+                        child: EmpleadoLista(
+                            '${empleados[index].apellido} , ${empleados[index].nombre}',
+                            empleados[index].id,
+                            servinfo.id,
+                            servinfo.nombre),
                       ),
-                      //title: Text(empleadosDisp[index]['']),
-                    ), */
-                  ),
-                ), */
-              ),
-            ), */
-          ]),
+                    ),
+                  )
+                  /*  Expanded(
+                child: SizedBox(
+                  height: 300,
+                  width: double.infinity,
+                  /* child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: empleadosDisp.length,
+                    itemBuilder: (context, index) => Card(
+                      elevation: 5,
+                      /* child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.green,
+                          child: Text('$index'),
+                        ),
+                        //title: Text(empleadosDisp[index]['']),
+                      ), */
+                    ),
+                  ), */
+                ),
+              ), */
+                ]),
+          ),
         ],
       ),
     );
