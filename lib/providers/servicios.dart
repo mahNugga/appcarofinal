@@ -145,7 +145,7 @@ class Servicios with ChangeNotifier {
   } */
 
   Future<void> traeServicios() async {
-    var url = Uri.http('localhost:3700', '/api/consulta-servicio');
+    var url = Uri.http('localhost:3909', '/api/consulta-servicio');
     try {
       var response = await http.get(url);
       print(response);
@@ -187,7 +187,7 @@ class Servicios with ChangeNotifier {
     var horafix = horadb.substring(10, 12);
     print('las variables son:');
     print(empleadoid + ',' + servicioid + ',' + sernom + ',' + horafix);
-    var url = Uri.http('localhost:3700', '/api/reservar');
+    var url = Uri.http('localhost:3909', '/api/reservar');
     try {
       var res = http.post(url,
           headers: {'Content-Type': 'application/json'},

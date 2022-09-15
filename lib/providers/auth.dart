@@ -9,10 +9,6 @@ class Auth with ChangeNotifier {
   String _userid = '';
   String externalToken = '';
 
-  bool get isAuth {
-    return true;
-  }
-
   String? get token {
     if (_expired != null &&
         _expired!.isAfter(DateTime.now()) &&
@@ -20,6 +16,14 @@ class Auth with ChangeNotifier {
       return _token;
     }
     return null;
+  }
+
+  bool get isAuth {
+    if (_token.isNotEmpty) {
+      print(_token);
+      return true;
+    }
+    return false;
   }
 
   Future<void> _authenticate(
@@ -69,7 +73,7 @@ class Auth with ChangeNotifier {
         if (key == 'token') {
           print('entramos a data');
           print(key);
-          jinx = value;
+          jinx = value.toString();
           /* vec.forEach((rt, t) {
             print('entro a vec');
             print(t);
@@ -82,7 +86,7 @@ class Auth with ChangeNotifier {
         if (key == 'usuariom') {
           List vec = value;
           vec.forEach((t) {
-            idres = t['id'];
+            idres = t['id'].toString();
           });
         }
       });
