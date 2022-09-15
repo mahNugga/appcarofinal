@@ -24,6 +24,17 @@ class Reservainfo {
   });
 }
 
+class ReservaCliente {
+  String cliente_id;
+  String reservahora;
+  String servicionombre;
+  ReservaCliente({
+    required this.cliente_id,
+    required this.reservahora,
+    required this.servicionombre,
+  });
+}
+
 class Empleado {
   final String id;
   final String nombre;
@@ -56,7 +67,7 @@ class EmpleadoReserva with ChangeNotifier {
 class Reservas with ChangeNotifier {
   List<EmpleadoReserva> empleadosDisp = [];
   Future<void> addEmpleado() async {
-    var url = Uri.parse('http://localhost:3700/api/lista-empleado-gen');
+    var url = Uri.parse('http://localhost:3909/api/lista-empleado-gen');
     try {
       var response = await http.get(url);
       print(json.decode(response.body));
@@ -110,7 +121,7 @@ class Reservas with ChangeNotifier {
     var f = fecha.toString().substring(0, 10);
     print(fecha.toString().substring(0, 10));
     var url =
-        Uri.http('localhost:3700', '/api/verifica-fechas', {'fechaing': f});
+        Uri.http('localhost:3909', '/api/verifica-fechas', {'fechaing': f});
 
     try {
       var response = await http.get(url);
@@ -148,6 +159,31 @@ class Reservas with ChangeNotifier {
     } catch (er) {
       print(er);
       throw er;
+    }
+  }
+
+  List<ReservaCliente> reservasDetalle = [];
+  Future<void> traerReservas() async {
+    var url = Uri.http('localhost:3909', '/api/consulta-reservacioncliente2');
+    try {
+      var response = await http.get(url);
+      var data = json.decode(response.body) as Map<String, dynamic>;
+      List<ReservaCliente> jinx = [];
+      data.forEach((key, value) {
+        if (key == 'resecliente') {
+          List vec = value;
+          vec.forEach((ment) {
+            jinx.add(ReservaCliente(
+              cliente_id: ment['reservacion.cliente_id'].toString(),
+              reservahora: ment['reservacion.hora'].toString(),
+              servicionombre: ment['serv.nombre'].toString(),
+            ));
+          });
+        }
+      });
+      reservasDetalle = jinx;
+    } catch (err) {
+      print(err);
     }
   }
 }

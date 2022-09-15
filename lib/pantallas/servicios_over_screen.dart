@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import '../providers/servicios.dart';
 import '../widgets/servicios_grid.dart';
+import '../widgets/botoncito.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -66,6 +67,7 @@ class _ServiciosOverScreenState extends State<ServiciosOverScreen> {
           )
         ],
       ),
+      drawer: Botoncito(),
       body: _isloading
           ? Center(
               child: CircularProgressIndicator(),

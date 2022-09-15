@@ -9,6 +9,7 @@ import './providers/servicios.dart';
 import './providers/reservas.dart';
 import './providers/auth.dart';
 import './pantallas/auth_screen.dart';
+import './pantallas/reservas_cli_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
               ServicioDetalleScreen.routeName: (ctx) => ServicioDetalleScreen(),
               ReservaConfScreen.routeName: (ctx) => ReservaConfScreen(),
               ReservaScreen.routeName: (ctx) => ReservaScreen(),
+              ReservasClienteScreen.routeName: (ctx) => ReservasClienteScreen(),
             },
           ),
         ));

@@ -108,4 +108,12 @@ class Auth with ChangeNotifier {
       throw err;
     }
   }
+
+  Future<void> traerReservas() async {}
+
+  void logout() {
+    _token = '';
+    _expired = null;
+    _userid = '';
+  }
 }
