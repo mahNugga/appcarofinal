@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
+import '../widgets/cliente_reserva.dart';
 
 class ReservasClienteScreen extends StatelessWidget {
   const ReservasClienteScreen({Key? key}) : super(key: key);
@@ -26,6 +27,11 @@ class ReservasClienteScreen extends StatelessWidget {
         drawer: Botoncito(),
         body: Padding(
           padding: EdgeInsets.all(8),
+          child: ListView.builder(
+              itemCount: reservasData.reservasDetalle.length,
+              itemBuilder: (_, i) => ClienteReserva(
+                  reservasData.reservasDetalle[i].servicionombre,
+                  'images/logoCorteCabello2.png')),
           /* child: ListView.builder(
               itemCount: reservasData.reservasDetalle.length,
               itemBuilder: (_,i)=>), */
