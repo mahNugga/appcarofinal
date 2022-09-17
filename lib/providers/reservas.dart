@@ -25,10 +25,12 @@ class Reservainfo {
 }
 
 class ReservaCliente {
+  String reserva_id;
   String cliente_id;
   String reservahora;
   String servicionombre;
   ReservaCliente({
+    required this.reserva_id,
     required this.cliente_id,
     required this.reservahora,
     required this.servicionombre,
@@ -163,25 +165,49 @@ class Reservas with ChangeNotifier {
   }
 
   List<ReservaCliente> reservasDetalle = [];
-  Future<void> traerReservas() async {
-    var url = Uri.http('localhost:3909', '/api/consulta-reservacioncliente2');
+  Future<void> traerReservas(id) async {
+    var url = Uri.http(
+        'localhost:3909', '/api/consulta-reservacioncliente2', {'id': id});
     try {
       var response = await http.get(url);
+      print(json.decode(response.body));
       var data = json.decode(response.body) as Map<String, dynamic>;
       List<ReservaCliente> jinx = [];
       data.forEach((key, value) {
         if (key == 'resecliente') {
           List vec = value;
           vec.forEach((ment) {
+            print('reservas');
+            print(ment);
             jinx.add(ReservaCliente(
-              cliente_id: ment['reservacion.cliente_id'].toString(),
-              reservahora: ment['reservacion.hora'].toString(),
-              servicionombre: ment['serv.nombre'].toString(),
+              reserva_id: ment['id'].toString(),
+              cliente_id: ment['cliente_id'].toString(),
+              reservahora: ment['hora'].toString() + ':00',
+              servicionombre: ment['nombre'].toString(),
             ));
           });
         }
       });
       reservasDetalle = jinx;
+      jinx.forEach((element) {
+        print('elementos detalle reservas');
+        print(element.servicionombre);
+        notifyListeners();
+      });
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  Future<void> chaoReserva(id) async {
+    var url = Uri.http('localhost:3909', '/api/eliminar-reservacli');
+    try {
+      var res = http.post(url,
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'estado_id': 1,
+          }));
+      reservasDetalle.removeWhere((element) => element.reserva_id == id);
     } catch (err) {
       print(err);
     }

@@ -128,7 +128,8 @@ class _ReservaScreenState extends State<ReservaScreen> {
                             '${empleados[index].apellido} , ${empleados[index].nombre}',
                             empleados[index].id,
                             servinfo.id,
-                            servinfo.nombre),
+                            servinfo.nombre,
+                            fechaneo),
                       ),
                     ),
                   )

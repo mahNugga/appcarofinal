@@ -1,4 +1,6 @@
 import 'package:appcarofinal/pantallas/auth_screen.dart';
+import 'package:appcarofinal/pantallas/bondia.dart';
+import 'package:appcarofinal/pantallas/servicios_over_screen.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +12,14 @@ import '../pantallas/reservas_cli_screen.dart';
 class Botoncito extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final cid = Provider.of<Auth>(context).userid;
+    final user = Provider.of<Auth>(context, listen: false).nombrecli;
+    final usersec = Provider.of<Auth>(context).apellidocli;
     return Drawer(
       child: Column(
         children: <Widget>[
           AppBar(
-            title: Text(''),
+            title: Text('Enlaces rapidos'),
             automaticallyImplyLeading: false,
           ),
           Divider(),
@@ -22,7 +27,8 @@ class Botoncito extends StatelessWidget {
             leading: Icon(Icons.cut_outlined),
             title: Text('Servicios'),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed('/');
+              Navigator.of(context)
+                  .pushReplacementNamed(ServiciosOverScreen.routeName);
             },
           ),
           Divider(),
@@ -30,8 +36,20 @@ class Botoncito extends StatelessWidget {
             leading: Icon(Icons.request_quote),
             title: Text('Reservas'),
             onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(ReservasClienteScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(
+                ReservasClienteScreen.routeName,
+                arguments: cid,
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.request_quote),
+            title: Text('Inicio'),
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                BienvenidaScreen.routeName,
+              );
             },
           ),
           /* Divider(),

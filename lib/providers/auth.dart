@@ -6,8 +6,10 @@ import '../models/http_exception.dart';
 class Auth with ChangeNotifier {
   String _token = '';
   DateTime? _expired;
-  String _userid = '';
+  String userid = '';
   String externalToken = '';
+  String nombrecli = '';
+  String apellidocli = '';
 
   String? get token {
     if (_expired != null &&
@@ -69,6 +71,8 @@ class Auth with ChangeNotifier {
       var jinx = '';
       var erpost;
       var idres;
+      var nomres;
+      var aperes;
       data.forEach((key, value) {
         if (key == 'token') {
           print('entramos a data');
@@ -87,6 +91,8 @@ class Auth with ChangeNotifier {
           List vec = value;
           vec.forEach((t) {
             idres = t['id'].toString();
+            nomres = t['nombre'].toString();
+            aperes = t['apellido'].toString();
           });
         }
       });
@@ -94,10 +100,10 @@ class Auth with ChangeNotifier {
         print(element);
       }); */
       _token = jinx;
-      _userid = idres;
+      userid = idres;
       //_expired = DateTime.now().add(Duration(seconds: int.parse()));
       print(_token);
-      print(_userid);
+      print(userid);
       final result = erpost;
       notifyListeners();
       if (result == 6) {
@@ -114,6 +120,6 @@ class Auth with ChangeNotifier {
   void logout() {
     _token = '';
     _expired = null;
-    _userid = '';
+    userid = '';
   }
 }

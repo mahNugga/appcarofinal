@@ -10,6 +10,7 @@ import './providers/reservas.dart';
 import './providers/auth.dart';
 import './pantallas/auth_screen.dart';
 import './pantallas/reservas_cli_screen.dart';
+import './pantallas/bondia.dart';
 
 void main() => runApp(MyApp());
 
@@ -37,12 +38,14 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.amber,
               fontFamily: 'Lato',
             ),
-            home: auth.isAuth ? ServiciosOverScreen() : AuthScreen(),
+            home: auth.isAuth ? BienvenidaScreen() : AuthScreen(),
             routes: {
+              ServiciosOverScreen.routeName: (ctx) => ServiciosOverScreen(),
               ServicioDetalleScreen.routeName: (ctx) => ServicioDetalleScreen(),
               ReservaConfScreen.routeName: (ctx) => ReservaConfScreen(),
               ReservaScreen.routeName: (ctx) => ReservaScreen(),
               ReservasClienteScreen.routeName: (ctx) => ReservasClienteScreen(),
+              BienvenidaScreen.routeName: (ctx) => BienvenidaScreen(),
             },
           ),
         ));

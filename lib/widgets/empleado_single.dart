@@ -12,8 +12,14 @@ class EmpleadoLista extends StatefulWidget {
   final String empleado_id;
   final String servicio_id;
   final String servicionombre;
+  final String fechaelegida;
   EmpleadoLista(
-      this.nombreemp, this.empleado_id, this.servicio_id, this.servicionombre);
+    this.nombreemp,
+    this.empleado_id,
+    this.servicio_id,
+    this.servicionombre,
+    this.fechaelegida,
+  );
 
   @override
   State<EmpleadoLista> createState() => _EmpleadoListaState();
@@ -27,12 +33,14 @@ class _EmpleadoListaState extends State<EmpleadoLista> {
     servicio_id,
     sernom,
     hora,
+    fecha,
   ) {
     Provider.of<Servicios>(context, listen: false).Reservar(
       empleado_id,
       servicio_id,
       sernom,
       hora,
+      fecha,
     );
   }
 
@@ -73,8 +81,12 @@ class _EmpleadoListaState extends State<EmpleadoLista> {
             icon: Icon(Icons.lock_clock),
           ),
           ElevatedButton(
-            onPressed: () => ProcedeReserva(widget.empleado_id,
-                widget.servicio_id, widget.servicionombre, time),
+            onPressed: () => ProcedeReserva(
+                widget.empleado_id,
+                widget.servicio_id,
+                widget.servicionombre,
+                time,
+                widget.fechaelegida),
             child: Text("R e s e r v a r"),
           ),
         ],

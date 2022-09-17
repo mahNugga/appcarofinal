@@ -14,6 +14,7 @@ enum filtroOp {
 }
 
 class ServiciosOverScreen extends StatefulWidget {
+  static const routeName = '/servicios-disponibles';
   @override
   State<ServiciosOverScreen> createState() => _ServiciosOverScreenState();
 }
@@ -22,6 +23,7 @@ class _ServiciosOverScreenState extends State<ServiciosOverScreen> {
   var _showOnlyFavoritos = false;
   var _isInit = true;
   var _isloading = false;
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
