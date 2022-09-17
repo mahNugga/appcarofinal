@@ -6,6 +6,7 @@ import '../widgets/botoncito.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../widgets/cliente_reserva.dart';
 
@@ -28,8 +29,11 @@ class _ReservasClienteScreenState extends State<ReservasClienteScreen> {
       setState(() {
         _isloading = true;
       });
-      final cid = ModalRoute.of(context)!.settings.arguments;
-      Provider.of<Reservas>(context).traerReservas(cid).then((_) {
+      final cid =
+          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+      Provider.of<Reservas>(context)
+          .traerReservas(cid['cid'], cid['fecha'])
+          .then((_) {
         setState(() {
           _isloading = false;
         });

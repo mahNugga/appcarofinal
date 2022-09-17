@@ -165,9 +165,10 @@ class Reservas with ChangeNotifier {
   }
 
   List<ReservaCliente> reservasDetalle = [];
-  Future<void> traerReservas(id) async {
-    var url = Uri.http(
-        'localhost:3909', '/api/consulta-reservacioncliente2', {'id': id});
+  Future<void> traerReservas(id, fecha) async {
+    print('parametros reserva' + id + fecha);
+    var url = Uri.http('localhost:3909', '/api/consulta-reservacioncliente2',
+        {'id': id, 'fecha': fecha});
     try {
       var response = await http.get(url);
       print(json.decode(response.body));
