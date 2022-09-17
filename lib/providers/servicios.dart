@@ -182,9 +182,11 @@ class Servicios with ChangeNotifier {
     }
   }
 
-  Future<void> Reservar(empleadoid, servicioid, sernom, hora, fecha) async {
+  Future<void> Reservar(
+      empleadoid, servicioid, sernom, hora, fecha, clid) async {
     var horadb = hora.toString();
     var horafix = horadb.substring(10, 12);
+    var fechafix = fecha.toString();
     print('las variables son:');
     print(empleadoid +
         ',' +
@@ -194,7 +196,9 @@ class Servicios with ChangeNotifier {
         ',' +
         horafix +
         ',' +
-        fecha);
+        fechafix +
+        ',' +
+        clid);
     var url = Uri.http('localhost:3909', '/api/reservar');
     try {
       var res = http.post(url,
@@ -203,7 +207,7 @@ class Servicios with ChangeNotifier {
             'cabecera': '',
             'notas': 'android.API-30',
             'mensaje': '',
-            'fechaseleccion': fecha,
+            'fechaseleccion': fechafix,
             'hora': horafix,
             'descuento': 0.00,
             'subtotal': 0.00,
@@ -212,7 +216,7 @@ class Servicios with ChangeNotifier {
             'fecha_creado': DateTime.now().toString(),
             'servicio_id': servicioid,
             'empleado_id': empleadoid,
-            'cliente_id': 1,
+            'cliente_id': clid,
             'estado_id': 1,
           }));
     } catch (err) {

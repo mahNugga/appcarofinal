@@ -6,13 +6,15 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import '../providers/reservas.dart';
 import '../providers/servicios.dart';
+import '../providers/auth.dart';
+import '../pantallas/servicios_over_screen.dart';
 
 class EmpleadoLista extends StatefulWidget {
   final String nombreemp;
   final String empleado_id;
   final String servicio_id;
   final String servicionombre;
-  final String fechaelegida;
+  final DateTime fechaelegida;
   EmpleadoLista(
     this.nombreemp,
     this.empleado_id,
@@ -27,7 +29,7 @@ class EmpleadoLista extends StatefulWidget {
 
 class _EmpleadoListaState extends State<EmpleadoLista> {
   //get empleado_id => null;
-
+  var horaneo;
   void ProcedeReserva(
     empleado_id,
     servicio_id,
@@ -35,13 +37,48 @@ class _EmpleadoListaState extends State<EmpleadoLista> {
     hora,
     fecha,
   ) {
-    Provider.of<Servicios>(context, listen: false).Reservar(
+    final clid = Provider.of<Auth>(context, listen: false).userid;
+    Provider.of<Servicios>(context, listen: false)
+        .Reservar(
       empleado_id,
       servicio_id,
       sernom,
       hora,
       fecha,
-    );
+      clid,
+    )
+        .then((_) {
+      showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                title: Text('Felicitaciones'),
+                content: Text("Su reserva ha sido procesada con exito"),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed(ServiciosOverScreen.routeName);
+                    },
+                    child: Text('Entendido'),
+                  )
+                ],
+              ));
+    });
+  }
+
+  void _presentHoraPicker() {
+    TimeOfDay time = TimeOfDay(hour: 10, minute: 00);
+    showTimePicker(
+      context: context,
+      initialTime: time,
+    ).then((pickles) {
+      if (pickles == null) {
+        return;
+      }
+      setState(() {
+        horaneo = pickles;
+      });
+    });
   }
 
   @override
@@ -64,20 +101,14 @@ class _EmpleadoListaState extends State<EmpleadoLista> {
                 ),
               )),
           Text(
+            '',
+          ),
+          /* Text(
             '${time.hour}',
             style: TextStyle(fontSize: 20),
-          ),
+          ), */
           IconButton(
-            onPressed: () async {
-              TimeOfDay? horaneo = await showTimePicker(
-                context: context,
-                initialTime: time,
-              );
-              if (horaneo == null) return;
-              setState(() {
-                time = horaneo;
-              });
-            },
+            onPressed: _presentHoraPicker,
             icon: Icon(Icons.lock_clock),
           ),
           ElevatedButton(
@@ -85,7 +116,7 @@ class _EmpleadoListaState extends State<EmpleadoLista> {
                 widget.empleado_id,
                 widget.servicio_id,
                 widget.servicionombre,
-                time,
+                horaneo, //,
                 widget.fechaelegida),
             child: Text("R e s e r v a r"),
           ),

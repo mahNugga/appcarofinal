@@ -17,7 +17,7 @@ class ClienteReserva extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void eliminador(id) {
-      Provider.of<Reservas>(context).chaoReserva(id);
+      Provider.of<Reservas>(context, listen: false).chaoReserva(id);
     }
 
     return ListTile(
@@ -66,7 +66,7 @@ class ClienteReserva extends StatelessWidget {
           backgroundImage: AssetImage('images/logoCorteCabello2.png')),
       trailing: IconButton(
         icon: Icon(Icons.accessibility_sharp),
-        onPressed: () {},
+        onPressed: () => eliminador(id),
         color: Colors.redAccent,
       ),
     );

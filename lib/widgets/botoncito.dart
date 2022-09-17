@@ -1,6 +1,6 @@
-import 'package:appcarofinal/pantallas/auth_screen.dart';
-import 'package:appcarofinal/pantallas/bondia.dart';
-import 'package:appcarofinal/pantallas/servicios_over_screen.dart';
+import '../pantallas/auth_screen.dart';
+import '../pantallas/bondia.dart';
+import '../pantallas/servicios_over_screen.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +14,11 @@ class Botoncito extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var date = new DateTime.now();
+    final datos = Provider.of<Auth>(context, listen: false);
+    final data = Provider.of<Auth>(context).apellidocli;
+    final dia = DateTime.now();
+    final fechafix = DateFormat('MM-yyyy').format(dia);
+    final diafix = DateFormat.EEEE('es_ES').format(dia);
     final fecha = DateFormat('yyyy-MM-dd').format(date);
     final cid = Provider.of<Auth>(context).userid;
     final user = Provider.of<Auth>(context, listen: false).nombrecli;

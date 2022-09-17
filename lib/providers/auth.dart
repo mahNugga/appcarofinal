@@ -101,9 +101,14 @@ class Auth with ChangeNotifier {
       }); */
       _token = jinx;
       userid = idres;
+      nombrecli = nomres;
+      apellidocli = aperes;
       //_expired = DateTime.now().add(Duration(seconds: int.parse()));
       print(_token);
       print(userid);
+      //print('y los otros 2');
+      print(nombrecli);
+      print(apellidocli);
       final result = erpost;
       notifyListeners();
       if (result == 6) {

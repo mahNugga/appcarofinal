@@ -286,7 +286,7 @@ class _AuthCardState extends State<AuthCard> {
                   TextButton(
                     onPressed: _swtichAuthMode,
                     child: Text(
-                        '${_authMode == AuthMode.Login ? 'REGISTRARSE' : 'LOGIN'} EN CAMBIO'),
+                        '${_authMode == AuthMode.Login ? 'REGISTRARSE' : 'LOGIN'} '),
                   ),
                 ],
               ),

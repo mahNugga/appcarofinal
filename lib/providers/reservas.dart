@@ -184,7 +184,7 @@ class Reservas with ChangeNotifier {
               reserva_id: ment['id'].toString(),
               cliente_id: ment['cliente_id'].toString(),
               reservahora: ment['hora'].toString() + ':00',
-              servicionombre: ment['nombre'].toString(),
+              servicionombre: ment['servnom'].toString(),
             ));
           });
         }
@@ -201,14 +201,17 @@ class Reservas with ChangeNotifier {
   }
 
   Future<void> chaoReserva(id) async {
+    print('');
     var url = Uri.http('localhost:3909', '/api/eliminar-reservacli');
     try {
-      var res = http.post(url,
+      var res = http.put(url,
           headers: {'Content-Type': 'application/json'},
           body: json.encode({
-            'estado_id': 1,
+            'id': id,
+            'estado_id': 3,
           }));
       reservasDetalle.removeWhere((element) => element.reserva_id == id);
+      notifyListeners();
     } catch (err) {
       print(err);
     }
